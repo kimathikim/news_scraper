@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from app.models import save_article
+import datetime
 
 
 def scrape_website(url):
@@ -50,6 +51,7 @@ def scrape_website(url):
                 "author": author,
                 "pub_date": pub_date,
                 "url": article_url,
+                "created_at": datetime.datetime.utcnow(),  # Add timestamp
             }
             articles.append(save_article(article))
     return articles
