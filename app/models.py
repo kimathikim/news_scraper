@@ -2,6 +2,12 @@ from pymongo import MongoClient
 from app import mongo
 import uuid
 from datetime import datetime
+from . import mongo
+
+# MongoDB Collections
+users_collection = mongo.db.users
+articles_collection = mongo.db.articles
+
 
 
 def save_article(article_data):

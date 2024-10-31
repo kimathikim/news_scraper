@@ -1,13 +1,15 @@
-from app.models import get_articles
-from flask import request, jsonify
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from .scraper.scraper import scrape_website
-from .models import get_articles
+from .models import articles_collection, get_articles
+import uuid
+import datetime
 
 main = Blueprint("main", __name__)
 
 
 @main.route("/scrape", methods=["GET"])
+@jwt_required()
 def scrape_news():
     url = request.args.get("url")
     if not url:
@@ -21,6 +23,7 @@ def scrape_news():
 
 
 @main.route("/articles", methods=["GET"])
+@jwt_required()
 def get_news():
     country = request.args.get("country")
     topic = request.args.get("topic")
