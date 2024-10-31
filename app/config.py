@@ -1,8 +1,9 @@
 import os
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 
 class Config:
-    MONGO_URI = os.getenv(
-        "MONGO_URI",
-        "mongodb+srv://briankimathi94:PEXpmaDRxHhDhG4D@cluster0.xxnli.mongodb.net/your_database_name?retryWrites=true&w=majority&appName=Cluster0",
-    )
+    MONGO_URI = os.getenv("MONGO_URI")
+
