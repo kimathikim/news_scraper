@@ -66,4 +66,4 @@ def get_articles(filters=None):
                 {"content": keywords_regex},  # Match in article content
             ]
 
-    return list(mongo.db.articles.find(query).sort("pub_date", -1))
+    return list(mongo.db.articles.find(query).sort("created_at", -1))
