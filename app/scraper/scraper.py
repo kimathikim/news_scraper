@@ -24,8 +24,7 @@ def scrape_website(url):
         title = headline.get_text(strip=True)
         link = headline.find("a")["href"] if headline.find("a") else None
         article_url = (
-            link if link and link.startswith(
-                "http") else url + link if link else url
+            link if link and link.startswith("http") else url + link if link else url
         )
 
         summary = (

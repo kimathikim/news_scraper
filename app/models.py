@@ -26,6 +26,8 @@ def save_article(article_data):
     return article_data
 
 
+from datetime import datetime
+
 def get_articles(filters=None):
     """Fetch articles from MongoDB with optional filters."""
     query = {}
@@ -48,8 +50,7 @@ def get_articles(filters=None):
             try:
                 # Split the date range into start and end dates
                 date_range = filters["pub_date"].split("to")
-                start_date = datetime.strptime(
-                    date_range[0].strip(), "%Y-%m-%d")
+                start_date = datetime.strptime(date_range[0].strip(), "%Y-%m-%d")
                 end_date = datetime.strptime(date_range[1].strip(), "%Y-%m-%d")
 
                 # Query for articles within the date range
@@ -57,7 +58,6 @@ def get_articles(filters=None):
             except (ValueError, IndexError):
                 pass  # Invalid date format or range, ignore the filter
 
-        # Filter by keywords in the entire content (content, title, or summary)
         if "keywords" in filters:
             keywords_regex = {"$regex": filters["keywords"], "$options": "i"}
             query["$or"] = [
@@ -66,5 +66,4 @@ def get_articles(filters=None):
                 {"content": keywords_regex},  # Match in article content
             ]
 
-    # Query the MongoDB articles collection
-    return list(mongo.db.articles.find(query))
+    return list(mongo.db.articles.find(query).sort("pub_date", -1))
