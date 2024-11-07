@@ -28,8 +28,7 @@ def signup():
     if existing_user:
         return jsonify({"message": "User already exists"}), 400
 
-    hashed_password = generate_password_hash(
-        data["password"], method="pbkdf2:sha256")
+    hashed_password = generate_password_hash(data["password"], method="pbkdf2:sha256")
 
     user = {
         "_id": str(uuid.uuid4()),
